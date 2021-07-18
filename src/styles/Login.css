@@ -5,19 +5,18 @@
     background-repeat: no-repeat;
 }
 
-
 .login-container {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,.5);
 }
 
-
 .login-title {
-    color: white;
+   color: #FFFFFF;
+   text-shadow: 3px 3px 5px #000000FA;
+    opacity: 1;
 }
 
 .form-container {
@@ -30,19 +29,20 @@
 
 
 .login__text-color {
-    color: #0d6efd;
+    color: #0052A1;
+    text-transform: uppercase;
+    margin: 8px;
+    text-align: center;
 }
 
-/*
-.login-container::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    height: 100%;
-    width: 100%;
-    
-   
+
+label.login__text-color {
+    color: #0952A1;
 }
-*/
+
+
+input.form-control {
+    color: #55595C;
+}
+
+

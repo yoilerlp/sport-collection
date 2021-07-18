@@ -6,16 +6,15 @@ import {
 import './App.css';
 import Login from "./pages/Login";
 import Landing from "./pages/Landing";
-import Home from "./pages/Home";
-
+import Admin from "./pages/Admin";
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route path="/" exact component={Landing} />
-        <Route  path="/login" component={Login} />
-        <Route path="/home" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/admin" component={Admin} />
       </Switch>
     </Router>
   );

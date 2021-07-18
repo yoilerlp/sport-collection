@@ -8,10 +8,7 @@ export default function Login() {
                 <h1 className="login-title">Sistema de Administracion de Inventarios </h1>
 
                 <div className="form-container">
-                    <h5 className="login__text-color " style={{
-                        textAlign: "center",
-                        margin: "8px"
-                    }}>ACCESO AL PANEL DE ADMINISTRACION</h5>
+                    <h5 className="login__text-color" >ACCESO AL PANEL DE ADMINISTRACION</h5>
                     <form className="login-form">
                         <div className="mb-3">
                             <label for="exampleInputEmail1" className="form-label login__text-color ">Email </label>

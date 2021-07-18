@@ -1,58 +1,13 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useRef } from 'react'
-import "../styles/Home.css"
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-export default function Home() {
-
-
-    const menuRef = useRef(null);
-
+export default function Menu() {
     return (
-        <div className="container-fluid " >
-            <div className="row" style={{
-                backgroundColor: "black",
-            }}>
-                <nav className="navbar ">
-                    <div className="container-fluid">
-                        <a className="navbar-brand white">Sistema  de Administracion de inventario</a>
-                        <a onMouseEnter={() => {
-                            menuRef.current.classList.add("show")
-                        }}
-                            onMouseLeave={ () => {
-                                menuRef.current.classList.remove("show")
-                            }}
-                        className="navbar-brand white" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-list-ul" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                            </svg>
-                            <ul ref={menuRef} className="menu-user">
-                                <li>
-                                    <a href="#">Gestionar usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="#">Gestionar articulos</a>
-                                </li>
-                                <li>
-                                    <a href="#">Generar reportes</a>
-                                </li>
-                                <li>
-                                    <a href="#">Procesar estadisticas</a>
-                                </li>
-                                <li>
-                                    <a href="#">Salir</a>
-                                </li>
-                            </ul>
-                        </a>
-                    </div>
-                </nav>
-            </div>
-
+        <>
             <h2 style={{
                 textAlign: "center",
                 margin: "20px",
             }} >Modulo de Administracion</h2>
-
-
             <div className="container px-4">
                 <div className="row justify-content-center ">
                     <div className="col-4">
@@ -62,7 +17,7 @@ export default function Home() {
                                 <h5 className="card-title">Usuarios</h5>
                                 <p className="card-text">Crear nuevos, editar, asignar permisos</p>
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="button" class="btn btn-outline-success">GESTIONAR</button>
+                                    <Link to="/admin/users" type="button" class="btn btn-outline-success">GESTIONAR</Link>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +30,7 @@ export default function Home() {
                                 <h5 className="card-title">Articulos</h5>
                                 <p className="card-text">Listar, registrar, editar y eliminar</p>
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="button" class="btn btn-outline-success">GESTIONAR</button>
+                                    <Link to="/admin/articles" type="button" class="btn btn-outline-success">GESTIONAR</Link>
                                 </div>
                             </div>
                         </div>
@@ -116,6 +71,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
