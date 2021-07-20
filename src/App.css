@@ -36,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+
+.textLogo{
+  width: auto;
+  height: 56px;
+  background-color: red;
+}
+
+
+.iconActions{
+  width: 30px;
+  max-width: 30px;
+  height: auto;
+  cursor: pointer;
+}
+
+.cardWelcomeLanding{
+  background-image: url('../src/assets/images/cenefa-landing.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: 33px !important;
+}
+
+.text-shadow{
+  text-shadow: 3px 3px 5px #000000, 3px 3px 5px #000000;
+}
+
+.card.shadow.col-12.col-md-6.col-lg-4{
+  max-width: 320px;
+}

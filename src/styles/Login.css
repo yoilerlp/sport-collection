@@ -1,6 +1,7 @@
 .login-page {
-    background-image: url(../assets/fondo-login.jpg);
+    background-image: url(../assets/images/fondo-login.jpg);
     height: 100vh;
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -23,14 +24,13 @@
     padding: 1rem;
     margin-top: 1.5rem;
     width: 35%;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: .4rem;
 }
 
 
 .login__text-color {
     color: #0052A1;
-    text-transform: uppercase;
     margin: 8px;
     text-align: center;
 }
@@ -45,4 +45,106 @@ input.form-control {
     color: #55595C;
 }
 
+.btn.btn-sm.btn-primary{
+    background-color: #0052A1;
+}
 
+
+
+
+
+/* -->  
+      ======= ====== ====== RESPONSIVE ======= ====== ====== 
+<-- */
+
+/* Mobile Portrait */
+@media (max-width: 767px) and (min-width: 300px) {
+    .form-container {
+        margin: 1rem;
+        width: 90%;
+        background-color: #ffffff;
+        border-radius: .4rem;
+    }
+  }
+  
+  
+  
+  /* iPhone 5/SE Landscape */
+  @media (max-width: 568px) and (min-width: 560px){
+      
+  }
+  
+  /* iPhone 6/7/8 Landscape */
+  @media (max-width: 667px) and (min-width: 569px){
+      
+  }
+  
+  /* iPhone 6/7/8 Plus Landscape */
+  @media (max-width: 736px) and (min-width: 415px){
+      
+  }
+  
+  /* iPhone X Landscape */
+  @media only screen and (min-width: 812px) and (orientation: landscape) {
+      
+  }
+  
+  
+  /* iPhone X/XS Landscape */
+  @media only screen and (device-width : 896px) and (orientation: landscape) {
+      
+  }
+  
+  /* iPhone 12 Pro Max Portrait */
+  @media only screen and (min-width: 428px) and (orientation: portrait) {
+      
+  }
+  
+  
+  
+  /* iPad portrait */
+  @media (min-width: 768px) and (orientation: portrait){
+    .form-container {
+        margin: 1rem;
+        width: 90%;
+        max-width: 350px;
+    }
+  }
+  
+  /* iPad Landscape */
+  @media only screen and (min-width: 1024px) and (orientation: landscape) {
+      
+  }
+  
+  /* iPad Pro portrait */
+  /* Declare the same value for min- and max-width to avoid colliding with desktops */
+  /* Source: https://medium.com/connect-the-dots/css-media-queries-for-ipad-pro-8cad10e17106*/
+  @media only screen 
+    and (min-device-width: 1024px) 
+    and (max-device-width: 1024px) 
+    and (orientation: portrait) 
+    and (-webkit-min-device-pixel-ratio: 2) {
+  
+  }
+  
+  @media only screen 
+    and (min-device-width: 938px) 
+    and (max-device-width: 938px) 
+    and (orientation: landscape){
+  
+  }
+  
+  @media only screen 
+    and (min-device-width: 602px) 
+    and (max-device-width: 602px) 
+    and (orientation: portrait){
+  
+  }
+  
+  
+  
+  /* Tab's Landscape */
+  @media (max-width: 1366px) and (min-width: 992px) {
+  
+  }
+  

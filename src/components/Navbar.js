@@ -6,12 +6,10 @@ export default function Navbar() {
     
     const menuRef = useRef(null);
     return (
-        <div className="row">
-            <nav className="navbar" style={{
-                backgroundColor: "black"
-            }}>
+        <div className="row fixed-top">
+            <nav className="navbar bg-dark">
                 <div className="container-fluid">
-                    <Link to="/admin" className="navbar-brand white">Sistema de Administracion de inventario</Link>
+                    <Link to="/admin" className="navbar-brand white">SPORT COLLECTION</Link>
                     <a onMouseEnter={() => {
                         menuRef.current.classList.add("show")
                     }}
@@ -36,7 +34,7 @@ export default function Navbar() {
                                 <a href="#">Procesar estadisticas</a>
                             </li>
                             <li>
-                                <a href="#">Salir</a>
+                                <Link className="text-danger" to="/login">Salir</Link>
                             </li>
                         </ul>
                     </a>
