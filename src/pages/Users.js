@@ -13,6 +13,7 @@ export default function Users() {
 
 	const closeModalUserRef =  useRef(null)
 
+
 	const handlerOnChange = (event) => {
 		const { name, value } = event.target;
 		console.log(name, value)
@@ -30,8 +31,14 @@ export default function Users() {
 			await updateUser(user._id, user)
 		}
 		else {
-			console.log(user)
-			 await createUser(user)
+			const newUser = {
+				...user,
+				password2: user.password,
+				state: 1
+			}
+			const response = await createUser(newUser)
+			console.log(newUser)
+			console.log(response)
 		}
 		setLoading(false)
 		closeModalUserRef.current.click();
@@ -43,6 +50,7 @@ export default function Users() {
 		(async () => {
 			setLoading(true)
 			const { data } = await getAllUsers();
+			console.log(data)
 			setUsers(data)
 			setLoading(false)
 		})()
@@ -57,6 +65,7 @@ export default function Users() {
 	}
 
 	useEffect(() => {
+		
 		getUsers()
 	}, [])
 	return (
@@ -67,6 +76,7 @@ export default function Users() {
 				<button onClick={() => { setUpdating(false) }} type="button" className="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Crear nuevo</button>
 			</div>
 
+		
 			<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<form onSubmit={handlerSubmit}>
@@ -118,7 +128,7 @@ export default function Users() {
 									<div className="col-md">
 										<div>
 											<label for="passUser" className="col-form-leabel">Contraseña:</label>
-											<input onChange={handlerOnChange} value={user.password} requiered name="password" type="text" className="form-control" id="passUser" placeholder="Contraseña"></input>
+											<input min={6} max={30} onChange={handlerOnChange} value={user.password} required name="password" type="text" className="form-control" id="passUser" placeholder="Contraseña"></input>
 										</div>
 									</div>
 								</div>
