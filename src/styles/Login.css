@@ -49,8 +49,18 @@ input.form-control {
     background-color: #0052A1;
 }
 
+.swal-button:not([disabled]){
+    background-color: #0052a1 !important;
+}
+
+.swal-button:not([disabled]):hover{
+    background-color: #004585 !important;
+}
 
 
+.swal-button.swal-button--cancel{
+    color: #ffffff;
+}
 
 
 /* -->  
