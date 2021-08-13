@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect, useRef } from 'react'
-
+import swal from 'sweetalert'
 import iconEdit from '../assets/images/iconEdit.svg';
 import iconTrash from '../assets/images/iconTrash.svg';
 import { getAllProducts, createProduct, updateProduct, deleteProduc } from '../services/productsServices';
@@ -27,10 +27,11 @@ export default function Articles() {
 		setLoading(true)
 		event.preventDefault();
 		if (isUpdating) {
-			await updateProduct(dataForm._id, dataForm)
+			await alertUpdate()
 		}
 		else {
 			await createProduct(dataForm)
+			alertCreate()
 		}
 		setLoading(false)
 		closeModalRef.current.click();
@@ -48,11 +49,64 @@ export default function Articles() {
 	}
 
 	const handlerDeleteProduct = async (productId) => {
-		if (confirm("¿Desea eliminar este producto ?")) {
+		let willDelete = await swal({
+			title: "Eliminar",
+			text: "¿Está seguro que desea eliminar este producto?",
+			icon: "error",
+			buttons: ["Cencelar", "Eliminar"],
+		})
+
+		if (willDelete) {
 			await deleteProduc(productId)
 			setProducts(products.filter(p => p._id !== productId))
 		}
 	}
+
+	const alertCreate = () => {
+		swal({
+			text: "Ha creado un producto",
+			icon: "success",
+			button: "Aceptar",
+			//timer: 1500,
+		})
+	}
+
+	const alertError = msg => {
+		swal({
+			text: msg,
+			icon: "error",
+			button: "Aceptar"
+		})
+	}
+
+
+	const alertUpdate = async () => {
+		let willUpdate = await swal({
+			text: "Seguro deseas actualizar la informacion de este producto ?",
+			icon: "warning",
+			buttons: ["Cancelar", "Actualizar"],
+			dangerMode: true,
+		})
+
+		if (willUpdate) {
+			setLoading(true)
+			try {
+				await await updateProduct(dataForm._id, dataForm)
+				await swal({
+					text: "Ha editado un producto",
+					icon: "success",
+					button: "Aceptar",
+				})
+			} catch (error) {
+				alertError("Error actualizando producto, revisa los datos ingresados")
+			}
+		} else {
+			swal("Actualizacion descartada");
+		}
+
+	}
+
+
 
 	useEffect(() => {
 		getProducts();
@@ -137,7 +191,7 @@ export default function Articles() {
 					<thead>
 						<tr className="bg-secondary bg-gradient">
 							<th className="text-light">N.</th>
-							<th className="text-light">Referencias</th>
+							<th className="text-light">Descripcion</th>
 							<th className="text-light">Producto</th>
 							{/*<th className="text-light">Género</th>
 							<th className="text-light">Talla</th>*/}
@@ -152,7 +206,7 @@ export default function Articles() {
 							return (
 								<tr key={index}>
 									<th>{index + 1}</th>
-									{<th>{product._id && product._id.substr(0, 8)}</th>}
+									{<th>{product.description && product.description.substr(0, 50)}</th>}
 									<th>{product.name}</th>
 									{/*<th>GENERO</th>
 									<th>unica</th>*/}

@@ -12,7 +12,7 @@ export default function Users() {
 	const [isUpdating, setUpdating] = useState(false)
 	const [isLoading, setLoading] = useState(false)
 
-	const closeModalUserRef =  useRef(null)
+	const closeModalUserRef = useRef(null)
 
 
 	const handlerOnChange = (event) => {
@@ -27,23 +27,34 @@ export default function Users() {
 
 	const handlerSubmit = async (event) => {
 		event.preventDefault();
-		setLoading(true)
+		
 		if (isUpdating) {
-			await updateUser(user._id, user)
+			await alertUpdate()
+			getUsers()
 		}
 		else {
+			setLoading(true)
 			const newUser = {
 				...user,
 				password2: user.password,
 				state: 1
 			}
-			const response = await createUser(newUser)
-			console.log(newUser)
-			console.log(response)
+
+			try {
+				const response = await createUser(newUser)
+				console.log(response)
+				alertCreate()
+				
+			} catch (error) {
+				console.log(error)
+				alertError("Error creando usuario, revisa los datos ingresados")
+			}
+			
+			getUsers()
 		}
 		setLoading(false)
 		closeModalUserRef.current.click();
-		getUsers()
+		
 	}
 
 
@@ -59,32 +70,66 @@ export default function Users() {
 
 	const handlerDeleteUser = async (userId) => {
 		// eslint-disable-next-line no-restricted-globals
-		if (
-			// confirm("¿Desea eliminar este Usuario ?")
-			swal({
-				title: "Eliminar",
-				text: "¿Está seguro que desea eliminar este usuario?",
-				icon: "error",
-				buttons: ["No","Sí"],
-			})
+		let willDelete = await swal({
+			title: "Eliminar",
+			text: "¿Está seguro que desea eliminar este usuario?",
+			icon: "error",
+			buttons: ["Cencelar", "Eliminar"],
+		})
 
-			) {
+		if (willDelete) {
 			await deleteUser(userId)
 			setUsers(users.filter(u => u._id !== userId));
 		}
 	}
 
-	const alertUpdate=()=>{
-		swal({
-				text: "Ha editado un usuario",
-				icon: "success",
-				button: "Aceptar",
-				timer: 1500,
+	
+
+	const alertUpdate = async () => {
+		let willUpdate = await swal({
+			text: "Seguro deseas actualizar la informacion de este usuario ?",
+			icon: "warning",
+			buttons: ["Cancelar", "Actualizar"],
+			dangerMode: true,
 		})
-}
+			
+		if (willUpdate) {
+			setLoading(true)
+			try {
+				await updateUser(user._id, user)
+				await swal({
+					text: "Ha editado un usuario",
+					icon: "success",
+					button: "Aceptar",
+				})
+			} catch (error) {
+				alertError("Error actualizando usuario, revisa los datos ingresados")
+			}
+		} else {
+			swal("Actualizacion descartada");
+		}
+			
+	}
+
+	const alertCreate = () => {
+		swal({
+			text: "Ha creado un usuario",
+			icon: "success",
+			button: "Aceptar",
+			//timer: 1500,
+		})
+	}
+
+	const alertError = msg  => {
+		swal({
+			text: msg,
+			icon: "error",
+			button: "Aceptar"			
+		})
+	}
+
 
 	useEffect(() => {
-		
 		getUsers()
 	}, [])
 	return (
@@ -92,10 +137,20 @@ export default function Users() {
 
 			<div className="d-flex justify-content-between my-4">
 				<h1 className="navbar-brand">Gestionar usuarios</h1>
-				<button onClick={() => { setUpdating(false) }} type="button" className="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Crear nuevo</button>
+				<button onClick={() => {
+					setUpdating(false)
+					setUser(prev => {
+						return {
+							firstName: '',
+							email: '',
+							lastName: '',
+							password: ''
+						}
+					})
+				}} type="button" className="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Crear nuevo</button>
 			</div>
 
-		
+
 			<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<form onSubmit={handlerSubmit}>
@@ -129,7 +184,7 @@ export default function Users() {
 									<div className="col-md">
 										<div>
 											<label for="emailUser" className="col-form-leabel">Email:</label>
-											<input onChange={handlerOnChange} value={user.email} required name="email" type="text" className="form-control" id="emailUser" placeholder="email@domain.com"></input>
+											<input disabled={isUpdating} onChange={handlerOnChange} value={user.email} required name="email" type="text" className="form-control" id="emailUser" placeholder="email@domain.com"></input>
 										</div>
 									</div>
 								</div>
@@ -160,7 +215,7 @@ export default function Users() {
 									{isLoading && <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
 								</button>
 
-								<button className="btn btn-sm btn-dark" onClick={()=>alertUpdate()}>swal Actualizar</button>
+							
 							</div>
 						</div>
 					</form>
@@ -194,7 +249,10 @@ export default function Users() {
 										<th className="text-center">
 											<img onClick={() => {
 												setUpdating(true)
-												setUser(user)
+												setUser({
+													...user,
+													password: ''
+												})
 											}} className="iconActions" src={iconEdit} alt="..." data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" />
 											<img onClick={() => handlerDeleteUser(user._id)} className="iconActions" src={iconTrash} alt="..." />
 										</th>

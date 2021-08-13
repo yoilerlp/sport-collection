@@ -1,3 +1,4 @@
+import React, { useState } from "react"
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,14 +11,18 @@ import Login from "./pages/Login";
 import Landing from "./pages/Landing";
 import Admin from "./pages/Admin";
 
+export const authCotext = React.createContext({});
 function App() {
+  const [userAuth, setUserAuth] = useState({})
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact component={Landing} />
-        <Route path="/login" component={Login} />
-        <Route path="/admin" component={Admin} />
-      </Switch>
+      <authCotext.Provider value={{userAuth,setUserAuth}}>
+        <Switch>
+          <Route path="/" exact component={Landing} />
+          <Route path="/login" component={Login} />
+          <Route path="/admin" component={Admin} />
+        </Switch>
+      </authCotext.Provider>
     </Router>
   );
 }

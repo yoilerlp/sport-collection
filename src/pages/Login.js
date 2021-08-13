@@ -31,12 +31,15 @@ export default function Login() {
         try {
             const response = await  loginUser(user)
             if (response.data.success) {
+                console.log(response)
                 saveToken(response.data.token)
                 setAuthToken(response.data.token)
                 hostory.push("/admin")
+                alertWelcome()
             }
             console.log(response)
         } catch (error) {
+            alertError()
             console.log(error)
         }
         setLoading(false)
@@ -48,7 +51,7 @@ export default function Login() {
             text: "Bienvenido al panel de administración",
             icon: "success",
             button: "Aceptar",
-            // timer: 1500,
+            //timer: 1500,
         })
     }
 
@@ -57,9 +60,9 @@ export default function Login() {
             title: "Información icorrecta",
             text: "Verifique email y/o contraseña",
             icon: "error",
-            // button: "Aceptar",
-            buttons: ["no", "si"],
-            // timer: 1500,
+            button: "Aceptar",
+            //buttons: ["no", "si"],
+            //timer: 1500,
         })
     }
 
@@ -73,11 +76,11 @@ export default function Login() {
                     <form className="login-form" onSubmit={handlerSubmi}>
                         <div className="mb-3">
                             <label for="exampleInputEmail1" className="form-label login__text-color ">Email </label>
-                            <input value={user.email} onChange={handlerOnChange} name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                            <input required value={user.email} onChange={handlerOnChange} name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
                         </div>
                         <div className="mb-3">
                             <label  for="exampleInputPassword1" className="form-label login__text-color ">Contraseña</label>
-                            <input value={user.password} onChange={handlerOnChange} name="password" type="password" className="form-control" id="exampleInputPassword1" />
+                            <input required value={user.password} onChange={handlerOnChange} name="password" type="password" className="form-control" id="exampleInputPassword1" />
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button  type="submit" className="btn btn-sm btn-primary">Ingresar
@@ -85,8 +88,9 @@ export default function Login() {
                             </button>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                            <button type="submit" className="btn btn-sm btn-success" onClick={()=>alertWelcome()}>Bienvenido</button>
+                           {/* <button type="submit" className="btn btn-sm btn-success" onClick={()=>alertWelcome()}>Bienvenido</button>
                             <button type="submit" className="btn btn-sm btn-danger" onClick={()=>alertError()}>Datos incorrectos</button>
+    */}
                         </div>
                     </form>
                 </div>
