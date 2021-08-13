@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
+import swal from 'sweetalert'
 
 import iconEdit from '../assets/images/iconEdit.svg';
 import iconTrash from '../assets/images/iconTrash.svg';
@@ -58,11 +59,29 @@ export default function Users() {
 
 	const handlerDeleteUser = async (userId) => {
 		// eslint-disable-next-line no-restricted-globals
-		if (confirm("¿Desea eliminar este Usuario ?")) {
+		if (
+			// confirm("¿Desea eliminar este Usuario ?")
+			swal({
+				title: "Eliminar",
+				text: "¿Está seguro que desea eliminar este usuario?",
+				icon: "error",
+				buttons: ["No","Sí"],
+			})
+
+			) {
 			await deleteUser(userId)
-			setUsers(users.filter(u => u._id !== userId))
+			setUsers(users.filter(u => u._id !== userId));
 		}
 	}
+
+	const alertUpdate=()=>{
+		swal({
+				text: "Ha editado un usuario",
+				icon: "success",
+				button: "Aceptar",
+				timer: 1500,
+		})
+}
 
 	useEffect(() => {
 		
@@ -140,6 +159,8 @@ export default function Users() {
 								<button type="submit" className="btn btn-success">{isUpdating ? "Actualizar" : "Guardar"}
 									{isLoading && <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
 								</button>
+
+								<button className="btn btn-sm btn-dark" onClick={()=>alertUpdate()}>swal Actualizar</button>
 							</div>
 						</div>
 					</form>

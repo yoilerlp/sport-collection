@@ -1,5 +1,6 @@
 import React, { useState,  } from 'react'
 import { useHistory } from 'react-router-dom'
+import swal from 'sweetalert'
 import { loginUser } from '../services/usersServices'
 
 import '../styles/Login.css'
@@ -41,6 +42,27 @@ export default function Login() {
         setLoading(false)
     }
 
+    const alertWelcome=()=>{
+        swal({
+            title: "Acceso concedido!!",
+            text: "Bienvenido al panel de administración",
+            icon: "success",
+            button: "Aceptar",
+            // timer: 1500,
+        })
+    }
+
+    const alertError=()=>{
+        swal({
+            title: "Información icorrecta",
+            text: "Verifique email y/o contraseña",
+            icon: "error",
+            // button: "Aceptar",
+            buttons: ["no", "si"],
+            // timer: 1500,
+        })
+    }
+
     return (
         <div className="login-page" >
             <div className="login-container">
@@ -61,6 +83,10 @@ export default function Login() {
                             <button  type="submit" className="btn btn-sm btn-primary">Ingresar
                                 {isLoading && <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
                             </button>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                            <button type="submit" className="btn btn-sm btn-success" onClick={()=>alertWelcome()}>Bienvenido</button>
+                            <button type="submit" className="btn btn-sm btn-danger" onClick={()=>alertError()}>Datos incorrectos</button>
                         </div>
                     </form>
                 </div>
