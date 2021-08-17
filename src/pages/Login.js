@@ -1,16 +1,17 @@
-import React, { useState,  } from 'react'
+import React, { useState, useContext  } from 'react'
 import { useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
-import { loginUser } from '../services/usersServices'
-
 import '../styles/Login.css'
-import { setAuthToken } from '../util/axios'
+import { loginUser } from '../services/usersServices'
 import { saveToken } from '../util/jwtHandler'
+import { setAuthToken } from '../util/axios'
+import { authCotext } from '../App'
 
 export default function Login() {
     const [user, setUser] = useState({})
     const [isLoading, setLoading ] = useState(false)
     const hostory = useHistory()
+    const { setUserAuth} = useContext(authCotext)
     const handlerOnChange = (event) => {
         const { name, value} = event.target;
         console.log(name, value)
@@ -23,7 +24,7 @@ export default function Login() {
     const handlerSubmi = async (event) => {
         event.preventDefault();
         await handlerLogin()
-        console.log(user)
+      
     }
 
     const handlerLogin = async () => {
@@ -31,16 +32,18 @@ export default function Login() {
         try {
             const response = await  loginUser(user)
             if (response.data.success) {
-                console.log(response)
-                saveToken(response.data.token)
+              
+                saveToken(JSON.stringify(response.data))
                 setAuthToken(response.data.token)
+                setUserAuth(response.data.userData)
+               
                 hostory.push("/admin")
                 alertWelcome()
             }
-            console.log(response)
+           
         } catch (error) {
             alertError()
-            console.log(error)
+            
         }
         setLoading(false)
     }

@@ -18,7 +18,7 @@ export default function Admin() {
     const hisotory = useHistory()
 
     useEffect(() => {
-        let token = getToken()
+        let token = getToken()?.token
         if(!token) {
             hisotory.push("/login")
         }

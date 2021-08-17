@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { authCotext } from '../App'
 import imgCardUser from '../assets/images/imgCardUsers.svg';
 import imgCardArticle from '../assets/images/imgCardArticle.svg';
 import imgCardReport from '../assets/images/imgCardReport.svg';
 import imgCardStatistics from '../assets/images/imgCardStatistics.svg';
 
 export default function Menu() {
+    const { userAuth } = useContext(authCotext)
+
     return (
         <>
             <div className="container px-4 mt-3 pt-5">
             <h2 className="mx-4 my-4 text-center"> Modulo de Administracion</h2>
                 <div className="row justify-content-center ">
-                    <div className="col-12 col-md-6 col-lg-4 my-3">
+                    {userAuth.rol === 1 && ( <div className="col-12 col-md-6 col-lg-4 my-3">
                         <div className="card shadow">
                             <img src={ imgCardUser } className="card-img-top" alt="..." />
                             <div className="card-body">
@@ -22,9 +25,9 @@ export default function Menu() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> )}
 
-                    <div className="col-12 col-md-6 col-lg-4 my-3">
+                    {userAuth.rol === 2 && (  <div className="col-12 col-md-6 col-lg-4 my-3">
                         <div className="card shadow" >
                         <img src={ imgCardArticle } className="card-img-top" alt="..." />
                             <div className="card-body">
@@ -35,7 +38,7 @@ export default function Menu() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>)}
 
                     <div className="col-12 col-md-6 col-lg-4 my-3">
                         <div className="card shadow" >

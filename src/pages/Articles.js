@@ -1,10 +1,11 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import swal from 'sweetalert'
+import {  authCotext } from '../App';
 import iconEdit from '../assets/images/iconEdit.svg';
 import iconTrash from '../assets/images/iconTrash.svg';
 import iconCart from '../assets/images/iconCart.svg';
-import { getAllProducts, createProduct, updateProduct, deleteProduc } from '../services/productsServices';
+import { getAllProducts, createProduct, updateProduct, deleteProduc, sellProduct } from '../services/productsServices';
 
 import ReactTooltip from 'react-tooltip';
 
@@ -14,6 +15,9 @@ export default function Articles() {
 	const [products, setProducts] = useState([]);
 	const [isUpdating, setUpdating] = useState(false)
 	const [isLoading, setLoading] = useState(false)
+	const [quantitySell, setQuantitySell] = useState(0)
+
+	const { userAuth } = useContext(authCotext)
 
 
 	const closeModalRef = useRef()
@@ -39,6 +43,34 @@ export default function Articles() {
 		setLoading(false)
 		closeModalRef.current.click();
 		getProducts()
+	}
+
+
+	const handlerSellProduct = async (event) => {
+		event.preventDefault();
+
+		let sellProduc = await swal({
+			// title: "Confirmar compra!!",
+			text: "¿Desea confirmar esta compra?",
+			icon: "success",
+			buttons: ["Cancelar", "Confirmar"],
+		})
+
+		if(sellProduc) {
+			const sell = {
+				user: userAuth,
+				product: dataForm,
+				quantities: +quantitySell
+			}
+			try {
+				const response = await sellProduct(sell)
+				alertConfirmSale()
+				console.log(response)
+				getProducts()
+			} catch (error) {
+				alertError("Error durante la venta, intentelo de nuevo")
+			}
+		}
 	}
 
 	const getProducts = () => {
@@ -109,21 +141,13 @@ export default function Articles() {
 
 	}
 
-	const alertSale=()=>{
-		swal({
-				// title: "Confirmar compra!!",
-				text: "¿Desea confirmar esta compra?",
-				icon: "success",
-				buttons: ["Cancelar", "Confirmar"],
-		})
-	}
 
-	const alertConfirmSale=()=>{
+	const alertConfirmSale = () => {
 		swal({
-				title: "Compra confirmada!!",
-				text: "Venta exitosa",
-				icon: "success",
-				button: "Aceptar",
+			title: "Compra confirmada!!",
+			text: "Venta exitosa",
+			icon: "success",
+			button: "Aceptar",
 		})
 	}
 
@@ -207,42 +231,43 @@ export default function Articles() {
 					</form>
 				</div>
 			</div>
-			
+
 			{/*  INICIO ---- Modal VENTAS */}
 			<div className="modal fade" id="saleModal" tabindex="-1" aria-labelledby="saleModalLabel" aria-hidden="true">
 				<div className="modal-dialog modal-dialog-centered">
-					<form action="#" className="col-12">
+					<form action="#" className="col-12" onSubmit={handlerSellProduct}>
 						<div className="modal-content">
 							<div className="modal-header">
 								<h5 className="text-success"> Vender producto</h5>
 								<button ref={closeModalRef} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div className="modal-body">
-								
+
 								<div className="row mb-3">
 									<div className="col-md">
 										<div>
 											<label for="descriptionArticle" className="col-form-leabel">Descripción:</label>
-											<input value="Casamisa Barcelona v2" type="text" className="form-control" id="descriptionArticle"></input>
+											<input value={dataForm.description} type="text" className="form-control" id="descriptionArticle"></input>
 										</div>
 									</div>
 								</div>
-								
+
 								<div className="row mb-3">
 									<div className="col-md">
 										<div>
 											<label for="quantityArticle" className="col-form-leabel">Cantidad:</label>
-											<input value={dataForm.units} onChange={handlerOnChange} name="units" required type="number" className="form-control" id="quantityArticle" placeholder="Cantidad"></input>
+											<input max={dataForm.units} min={1} name="quantities" required type="number" value={quantitySell}
+											onChange={(e) => {
+												setQuantitySell(e.target.value)
+											}}
+											 className="form-control" id="quantityArticle" placeholder="Cantidad"></input>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div className="modal-footer">
 								<button type="button" className="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-								<button type="submit" className="btn btn-success" onClick={()=>alertSale()}>Confirmar compra
-									{isLoading && <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
-								</button>
-								<button type="submit" className="btn btn-success" onClick={()=>alertConfirmSale()}>CONFIRMACIÓN
+								<button type="submit" className="btn btn-success">Confirmar compra
 								</button>
 							</div>
 						</div>
@@ -283,13 +308,13 @@ export default function Articles() {
 											data-tip
 											data-for="btnTooltipEdit"
 											onClick={() => {
-											setUpdating(true)
-											setDataForm({
-												...product,
-												gender: '',
-											})
-										}} className="iconActions" src={iconEdit} alt="..." data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" />
-										
+												setUpdating(true)
+												setDataForm({
+													...product,
+													gender: '',
+												})
+											}} className="iconActions" src={iconEdit} alt="..." data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" />
+
 										<ReactTooltip
 											id="btnTooltipEdit"
 											place="bottom"
@@ -297,13 +322,13 @@ export default function Articles() {
 											effect="solid">
 											Editar producto
 										</ReactTooltip>
-										
+
 										<img
 											data-tip
 											data-for="btnTooltipTrash"
 											onClick={() => {
-											handlerDeleteProduct(product._id)
-										}} className="iconActions" src={iconTrash} alt="..." />
+												handlerDeleteProduct(product._id)
+											}} className="iconActions" src={iconTrash} alt="..." />
 
 										<ReactTooltip
 											id="btnTooltipTrash"
@@ -312,12 +337,16 @@ export default function Articles() {
 											effect="solid">
 											Eliminar producto
 										</ReactTooltip>
-										
+
 										<img
 											data-tip
 											data-for="btnTooltipCart"
 											onClick={() => {
-												}} className="iconActions" src={iconCart} alt="..." data-bs-toggle="modal" data-bs-target="#saleModal" />
+												setDataForm({
+													...product,
+												})
+												setQuantitySell(0)
+											}} className="iconActions" src={iconCart} alt="..." data-bs-toggle="modal" data-bs-target="#saleModal" />
 
 										<ReactTooltip
 											id="btnTooltipCart"

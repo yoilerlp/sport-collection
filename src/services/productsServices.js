@@ -14,4 +14,8 @@ export async function updateProduct(productId, productData) {
 
 export async function deleteProduc(productId) {
     return await API.delete(`/products/delete-product/${productId}`)
-} 
+}
+
+export async function sellProduct(sellData) {
+    return await API.post('/sales/create-sale', sellData)
+}

@@ -6,5 +6,6 @@ export const removeToken = () => {
     localStorage.removeItem("jwtToken");
 }
 export const getToken = () => {
-   return localStorage.getItem("jwtToken")
+   return JSON.parse(localStorage.getItem("jwtToken"))
 }
+
