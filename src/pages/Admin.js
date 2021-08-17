@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Menu from './Menu';
+import Sales from './Sales';
 import Articles from './Articles';
 import Users from './Users'
 import "../styles/Admin.css"
@@ -31,6 +32,7 @@ export default function Admin() {
                     <Route path="/admin/users"  component={Users} />
                     <Route path="/admin/articles"  component={Articles} />
                     <Route path="/admin/salir" component={AuthOut} />
+                    <Route path="/admin/ventas" component={Sales} />
                 </Switch>
             </div>
         </>

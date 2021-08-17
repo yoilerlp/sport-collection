@@ -34,6 +34,9 @@ export default function Navbar() {
                                 <a href="#">Procesar estadisticas</a>
                             </li>
                             <li>
+                            <Link to="/admin/ventas">Resumen de ventas</Link>
+                            </li>
+                            <li>
                                 <Link  className="text-danger" to="/admin/salir">Salir</Link>
                             </li>
                         </ul>
