@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import swal from 'sweetalert'
-
+import Loader from '../components/Loader';
 import iconEdit from '../assets/images/iconEdit.svg';
 import iconTrash from '../assets/images/iconTrash.svg';
 import { createUser, deleteUser, getAllUsers, updateUser } from '../services/usersServices';
@@ -263,13 +263,7 @@ export default function Users() {
 					</tbody>
 				</table>
 			</div>
-			{isLoading && (
-				<div class="d-flex justify-content-center">
-					<div class="spinner-border" role="status">
-					</div>
-				</div>
-			)
-			}
+			{isLoading && <Loader /> }
 		</div>
 	)
 }

@@ -28,12 +28,12 @@ export default function Navbar() {
                            { userAuth.rol === 2 && ( <li>
                                 <Link to="/admin/articles">Gestionar articulos</Link>
                             </li>)}
-                            <li>
+                           {/* <li>
                                 <a href="#">Generar reportes</a>
-                            </li>
-                            <li>
-                                <a href="#">Procesar estadisticas</a>
-                            </li>
+                           </li>*/}
+                            { userAuth.rol === 1 && (  <li>
+                                <Link to="/admin/estadisticas">Revisar estadísticas</Link>
+                            </li>)}
                             {userAuth.rol === 1 && ( <li>
                                 <Link to="/admin/ventas">Resumen de ventas</Link>
                             </li> )}

@@ -40,32 +40,32 @@ export default function Menu() {
                         </div>
                     </div>)}
 
-                    <div className="col-12 col-md-6 col-lg-4 my-3">
+                    {userAuth.rol === 1 && ( <div className="col-12 col-md-6 col-lg-4 my-3">
                         <div className="card shadow" >
-                            <img src={ imgCardReport } className="card-img-top" alt="..." />
+                            <img src={imgCardReport} className="card-img-top" alt="..." />
                             <div className="card-body">
-                                <h5 className="card-title">Reportes</h5>
-                                <p className="card-text">Generar reportes</p>
+                                <h5 className="card-title">Resumen de ventas</h5>
+                                <p className="card-text">Listado de ventas</p>
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="button" class="btn btn-outline-success">GESTIONAR</button>
+                                    <Link to="/admin/ventas" type="button" class="btn btn-outline-success">GESTIONAR</Link>
 
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>)}
 
-                    <div className="col-12 col-md-6 col-lg-4 my-3">
+                    {userAuth.rol === 1 && ( <div className="col-12 col-md-6 col-lg-4 my-3">
                         <div className="card shadow" >
-                        <img src={ imgCardStatistics } className="card-img-top" alt="..." />
+                            <img src={imgCardStatistics} className="card-img-top" alt="..." />
                             <div className="card-body">
-                                <h5 className="card-title">Estadisticas</h5>
-                                <p className="card-text">Procesar estadisticas</p>
+                                <h5 className="card-title">Estadísticas</h5>
+                                <p className="card-text">Revisar estadísticas</p>
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="button" class="btn btn-outline-success">PROCESAR</button>
+                                    <Link to="/admin/estadisticas" type="button" class="btn btn-outline-success">VER</Link>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> )}
 
                 </div>
 

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import swal from 'sweetalert'
 import {  authCotext } from '../App';
+import Loader from '../components/Loader';
 import iconEdit from '../assets/images/iconEdit.svg';
 import iconTrash from '../assets/images/iconTrash.svg';
 import iconCart from '../assets/images/iconCart.svg';
@@ -363,10 +364,7 @@ export default function Articles() {
 					</tbody>
 				</table>
 			</div>
-			{isLoading && (<div class="d-flex justify-content-center">
-				<div class="spinner-border" role="status">
-				</div>
-			</div>)}
+			{isLoading && <Loader />}
 		</div>
 	)
 }

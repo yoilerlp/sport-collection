@@ -10,6 +10,7 @@ import Menu from './Menu';
 import Sales from './Sales';
 import Articles from './Articles';
 import Users from './Users'
+import Statistics from './Statistics';
 import "../styles/Admin.css"
 import { getToken } from '../util/jwtHandler';
 import AuthOut from '../components/AuthOut';
@@ -33,6 +34,8 @@ export default function Admin() {
                     <Route path="/admin/articles"  component={Articles} />
                     <Route path="/admin/salir" component={AuthOut} />
                     <Route path="/admin/ventas" component={Sales} />
+                    <Route path="/admin/estadisticas" component={Statistics} />
+
                 </Switch>
             </div>
         </>
