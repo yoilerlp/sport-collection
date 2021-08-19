@@ -297,14 +297,17 @@ export default function Articles() {
 						{products.length > 0 && products.map((product, index) => {
 							return (
 								<tr key={index}>
-									<th>{index + 1}</th>
-									{<th>{product.description && product.description.substr(0, 50)}</th>}
-									<th>{product.name}</th>
+									<td>{index + 1}</td>
+									{<td>{product.description && product.description.substr(0, 50)}</td>}
+									<td>{product.name}</td>
 									{/*<th>GENERO</th>
 									<th>unica</th>*/}
-									<th>{product.units}</th>
-									<th>{product.price}</th>
-									<th className="text-center">
+									<td>{product.units}</td>
+									<td>{product.price}</td>
+									<td className="text-center">
+										<>
+										{ userAuth.rol === 1 && 
+										<>
 										<img
 											data-tip
 											data-for="btnTooltipEdit"
@@ -338,8 +341,12 @@ export default function Articles() {
 											effect="solid">
 											Eliminar producto
 										</ReactTooltip>
+										</>
+										}
 
-										<img
+										{ userAuth.rol === 2 &&
+											<>
+											<img
 											data-tip
 											data-for="btnTooltipCart"
 											onClick={() => {
@@ -356,7 +363,12 @@ export default function Articles() {
 											effect="solid">
 											Vender producto
 										</ReactTooltip>
-									</th>
+										</>
+										}
+
+									</>
+										
+									</td>
 								</tr>
 							)
 						})}

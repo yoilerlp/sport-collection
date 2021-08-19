@@ -27,18 +27,18 @@ export default function Menu() {
                         </div>
                     </div> )}
 
-                    {userAuth.rol === 2 && (  <div className="col-12 col-md-6 col-lg-4 my-3">
+                      <div className="col-12 col-md-6 col-lg-4 my-3">
                         <div className="card shadow" >
                         <img src={ imgCardArticle } className="card-img-top" alt="..." />
                             <div className="card-body">
                                 <h5 className="card-title">Articulos</h5>
-                                <p className="card-text">Listar, registrar, editar y eliminar</p>
+                                <p className="card-text">{userAuth.rol === 1 ? "Listar, registrar, editar y eliminar" : "Vender Articulos"}</p>
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <Link to="/admin/articles" type="button" class="btn btn-outline-success">GESTIONAR</Link>
                                 </div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
 
                     {userAuth.rol === 1 && ( <div className="col-12 col-md-6 col-lg-4 my-3">
                         <div className="card shadow" >
