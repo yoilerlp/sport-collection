@@ -162,7 +162,7 @@ export default function Articles() {
 
 			<div className="d-flex justify-content-between my-4">
 				<h1 className="navbar-brand">Gestionar artículos</h1>
-				<button onClick={() => {
+				{userAuth.rol === 1 && ( <button onClick={() => {
 					setDataForm({
 						name: '',
 						gender: '',
@@ -171,7 +171,7 @@ export default function Articles() {
 						units: 0,
 					})
 					setUpdating(false)
-				}} type="button" className="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Registrar nuevo</button>
+				}} type="button" className="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Registrar nuevo</button>)}
 			</div>
 
 			<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
